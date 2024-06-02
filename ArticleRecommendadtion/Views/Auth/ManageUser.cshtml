@@ -1,0 +1,200 @@
+﻿@model ArticleRecommendadtion.Models.VMs.SignUpVM
+
+@{
+    Layout = null;
+}
+
+<head>
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/vendors.min.css">
+    <!-- END: Vendor CSS-->
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/themes/bordered-layout.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/themes/semi-dark-layout.css">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/plugins/forms/form-validation.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/pages/authentication.css">
+    <!-- END: Page CSS-->
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
+    <!-- END: Custom CSS-->
+</head>
+
+<div class="app-content content" style="margin-left: 50px; padding: 0px;">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="auth-wrapper auth-basic px-2">
+                <div class="auth-inner my-2">
+                    <!-- Register basic -->
+                    <div class="card mb-0">
+                        <div class="card-body">
+
+                            <h4 class="card-title mb-1">Manage Your Personal Informations 🚀</h4>
+                            <p class="card-text mb-2">Update Your Interests for Article Recommendation App!</p>
+
+                            <form asp-action="ManageUser" class="auth-register-form mt-2" method="POST">
+                                <div class="mb-1">
+                                    <label for="register-username" class="form-label">FirstName</label>
+                                    <input type="text" value="@Model.FirstName" class="form-control" id="first-name" name="register-username" aria-describedby="register-username" tabindex="1" autofocus />
+                                </div>
+                                <div class="mb-1">
+                                    <label for="register-username" class="form-label">LastName</label>
+                                    <input type="text" value="@Model.LastName" class="form-control" id="last-name" name="register-username" aria-describedby="register-username" tabindex="1" autofocus />
+                                </div>
+                                <div class="mb-1">
+                                    <label for="register-email" class="form-label">Email</label>
+                                    <input type="text" value="@Model.Email" class="form-control" id="email" name="register-email" placeholder="2102*****@@kocaeli.edu.tr" aria-describedby="register-email" tabindex="2" />
+                                </div>
+
+                                <div class="mb-1">
+                                    <label for="register-password" class="form-label">Password</label>
+
+                                    <div class="input-group input-group-merge form-password-toggle">
+                                        <input type="password" class="form-control form-control-merge" id="register-password" name="register-password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="register-password" tabindex="3" />
+                                        <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+                                    </div>
+                                </div>
+
+                                <button id="signup-button" class="btn btn-primary w-100" tabindex="5">Update</button>
+
+                            </form>
+
+                            @*<p class="text-center mt-2">
+                                <span>Already have an account?</span>
+                                <a href="@Url.Action("Login","Auth")">
+                                    <span>Sign in instead</span>
+                                </a>
+                            </p>*@
+                            <hr />
+
+                            <div class="card-body">
+                                <form action="#" class="invoice-repeater">
+                                    <div data-repeater-list="invoice">
+                                        <div data-repeater-item>
+                                            <div class="row d-flex align-items-end">
+                                                <div class="col-md-8 col-12">
+                                                    <div class="mb-1">
+                                                        <label class="form-label" for="itemname">Interest</label>
+                                                        <input type="text" class="form-control" id="interest-input" aria-describedby="itemname" placeholder="Ekle" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 col-12 mb-30">
+                                                    <div class="mb-1">
+                                                        <button class="btn btn-outline-danger text-nowrap px-1" data-repeater-delete type="button">
+                                                            <i data-feather="x" class="me-25"></i>
+                                                            <span>Delete</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button class="btn btn-icon btn-primary" type="button" data-repeater-create>
+                                                <i data-feather="plus" class="me-25"></i>
+                                                <span>Add New</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!--</div>-->
+                        <!-- /Invoice repeater -->
+                        <!--</div>-->
+
+
+                    </div>
+                </div>
+                <!-- /Register basic -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/app-assets/vendors/js/vendors.min.js"></script>
+<!-- BEGIN Vendor JS-->
+<!-- BEGIN: Page Vendor JS-->
+<script src="~/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Theme JS-->
+<script src="~/app-assets/js/core/app-menu.js"></script>
+<script src="~/app-assets/js/core/app.js"></script>
+<!-- END: Theme JS-->
+<!-- BEGIN: Page JS-->
+<script src="~/app-assets/js/scripts/pages/auth-login.js"></script>
+
+<script src="~/app-assets/js/scripts/pages/auth-register.js"></script>
+
+
+
+<script src="~/app-assets/vendors/js/vendors.min.js"></script>
+<script src="~/app-assets/vendors/js/forms/repeater/jquery.repeater.min.js"></script>
+<script src="~/app-assets/js/scripts/forms/form-repeater.js"></script>
+<script src="~/app-assets/js/core/app-menu.js"></script>
+<script src="~/app-assets/js/core/app.js"></script>
+
+
+<script>
+    console.log("click eventine girmeden öncesi.")
+    $('#signup-button').click(function (event) {
+        //debugger;
+        event.preventDefault(); // Formun normal submit işlemini engelle
+        console.log(1)
+        // Kullanıcı verilerini topla
+        var userData = {
+            FirstName: $('#first-name').val(),
+            LastName: $('#last-name').val(),
+            Email: $('#email').val(),
+            Password: $('#register-password').val(),
+            Interests: []
+        };
+        console.log(2)
+        // Dinamik olarak eklenen ilgi alanlarını topla
+        $('[data-repeater-item]').each(function() {
+            var interest = $(this).find('#interest-input').val();
+            if (interest) {
+                userData.Interests.push(interest);
+            }
+        });
+        console.log(3)
+        console.log(userData.FirstName);
+        console.log(userData.LastName)
+        console.log(userData.Email);
+        console.log(userData.Password);
+        console.log(userData.Interests);
+
+        // AJAX ile sunucuya POST isteği gönder
+        $.ajax({
+            url: '@Url.Action("ManageUser", "Auth")', // Kontrolör ve Action adını güncelleyin
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(userData),
+            success: function(response) {
+                console.log('Registration successful:', response);
+                // Başarı durumunda yapılacak işlem
+                window.location.href = response.redirectToUrl;
+            },
+            error: function(xhr, status, error) {
+                console.error('Registration failed:', xhr.responseText);
+                // Hata durumunda yapılacak işlem
+            }
+        });
+    });
+</script>

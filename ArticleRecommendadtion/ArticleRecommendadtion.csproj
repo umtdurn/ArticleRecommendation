@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.25.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="AbstractServices\" />
+    <None Remove="AbstractServices\MongoDbAbstract\" />
+    <None Remove="ConcreteServices\" />
+    <None Remove="ConcreteServices\MongoDbConcrete\" />
+    <None Remove="Views\Auth\" />
+    <None Remove="Models\VMs\" />
+    <None Remove="AbstractServices\BusinessServiceAbstract\" />
+    <None Remove="ConcreteServices\BusinessServiceConcrete\" />
+    <None Remove="ConcreteServices\ApiServiceConcrete\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AbstractServices\" />
+    <Folder Include="AbstractServices\MongoDbAbstract\" />
+    <Folder Include="ConcreteServices\" />
+    <Folder Include="ConcreteServices\MongoDbConcrete\" />
+    <Folder Include="Views\Auth\" />
+    <Folder Include="Models\VMs\" />
+    <Folder Include="AbstractServices\BusinessServiceAbstract\" />
+    <Folder Include="ConcreteServices\BusinessServiceConcrete\" />
+    <Folder Include="ConcreteServices\ApiServiceConcrete\" />
+  </ItemGroup>
+</Project>

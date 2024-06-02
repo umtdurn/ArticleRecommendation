@@ -1,0 +1,357 @@
+﻿@model ArticleRecommendadtion.Models.VMs.IndexVM
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .main-container {
+        position: relative;
+        display: flex;
+        background-color: powderblue;
+        width: 100%;
+        height: 1000px;
+    }
+
+    .left-container {
+        width: 50%;
+    }
+
+    .right-container {
+        width: 50%;
+    }
+
+    .searchbar {
+        display: flex;
+        margin: 10px;
+        width: 100%;
+        height: 4%;
+        justify-content: center;
+    }
+
+    #search-input {
+        width: 70%;
+        height: 100%;
+        border-radius: 10px;
+    }
+
+    #search-button {
+        margin-left: 10px;
+        border-radius: 10px;
+        background-color: white;
+    }
+
+    .results {
+        height: 94%;
+        background-color: powderblue;
+        padding: 6px 3px;
+        overflow: scroll;
+        scrollbar-base-color: transparent;
+        scrollbar-width: thin;
+    }
+
+    .fasttext-container {
+        height: 50%;
+        background-color: powderblue;
+    }
+
+    .scibert-container {
+        height: 50%;
+        background-color: powderblue;
+    }
+
+    .search-items {
+        border-style: solid;
+        border-width: 1px;
+        border-color: black;
+        border-radius: 4px;
+        margin: 8px 4px;
+        padding-right: 4px;
+        padding-left: 4px;
+        padding-top: 6px;
+    }
+
+    #basic-datatable-fasttext {
+        margin: 5px;
+    }
+
+    #basic-datatable-scibert {
+        margin: 5px;
+    }
+
+    .recommendation-header {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+</style>
+
+
+<div class="main-container">
+    <div class="left-container">
+        <form method="post" asp-action="Search" asp-controller="Home">
+            <div class="searchbar">
+                <input id="search-input" name="searchWord" placeholder="Aramak istediğiniz makaleyi giriniz." />
+                <button id="search-button" type="submit"> ARA </button>
+            </div>
+        </form>
+            <hr />
+            <div class="results">
+                @foreach (var item in Model.SearchArticles)
+                {
+                    var keywords = item.Data.Keywords.Split(";");
+                    <div class="search-items">
+                        <h4 class="search-title" data-title="@item.Data.Title">@item.Data.Title - </h4>
+                        <p>
+                            KEYWORDS: @foreach (var item2 in keywords)
+                            {
+                                <span>@item2 | </span>
+                            }
+                        </p>
+                        <p>@item.Data.Abstract</p>
+                        <div>
+                            <button class="search-like-btn" data-title="@item.Data.Title">Beğendim</button>
+                            <button class="search-disslike-btn" data-title="@item.Data.Title">Beğenmedim</button>
+                        </div>
+                    </div>                   
+                }
+            </div>
+        
+    </div>
+
+    <div class="right-container">
+        <div class="fasttext-container">
+            @if (Model.FastTextRecommendations.Count() > 0)
+            {
+                <h2 style="color:black" class="recommendation-header"> 5 FastText Recommendations -  @Model.FastTextPrecision.</h2>
+            
+                <section id="basic-datatable-fasttext">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <table class="datatables-basic table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Title</th>
+                                            <th>Score</th>
+                                            <th>Feedback</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.FastTextRecommendations)
+                                        {
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <a asp-action="ArticleDetails" asp-controller="Home">@item.Title</a>
+                                                </td>
+                                                <td>@item.Score</td>
+                                                <td>
+                                                    <div>
+                                                        <button class="recomm-btn" data-type="fasttext" data-state="like" data-title="@item.Title">Beğendim</button>
+                                                        <button class="recomm-btn" data-type="fasttext" data-state="disslike" data-title="@item.Title">Beğenmedim</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                }
+        </div>
+        <div class="scibert-container">
+            @if (Model.SciBertRecommendations.Count() > 0)
+            {
+                <h2 style="color:black" class="recommendation-header"> 5 SCIBERT Recommendations - @Model.SciBertPrecision</h2>
+
+                <section id="basic-datatable-scibert">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <table class="datatables-basic table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Title</th>
+                                            <th>Score</th>
+                                            <th>Feedback</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.SciBertRecommendations)
+                                        {
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <a asp-action="ArticleDetails" asp-controller="Home">@item.Title</a>
+                                                </td>
+                                                <td>@item.Score</td>
+                                                <td>
+                                                    <div>
+                                                        <button class="recomm-btn"  data-type="scibert" data-state="like" data-title="@item.Title">Beğendim</button>
+                                                        <button class="recomm-btn" data-type="scibert" data-state="disslike" data-title="@item.Title">Beğenmedim</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+    $('.search-like-btn').click(function () {
+
+        var dataTitle = $(this).attr('data-title');
+        console.log(dataTitle);
+
+        $.ajax({
+            url: '@Url.Action("AddArticleLikedList", "Home")',  // Sunucu tarafı işlem endpoint'i
+            type: 'POST',
+            data: {
+                title: dataTitle
+            },
+            success: function (response) {
+                alert(response);
+                console.log('Response:', response);
+            },
+            error: function (xhr, status, error) {
+                // İstek hata verdiğinde yapılacak işlemler
+                console.error('AJAX error:', status, error);
+            }
+        });
+    });
+
+    $('.search-disslike-btn').click(function () {
+
+        var dataTitle = $(this).attr('data-title');
+        console.log(dataTitle);
+
+        $.ajax({
+            url: '@Url.Action("AddArticleDisslikedList", "Home")',
+            type: 'POST',
+            data: {
+                title: dataTitle
+            },
+            success: function (response) {
+                alert(response);
+                console.log('Response:', response);
+            },
+            error: function (xhr, status, error) {
+                // İstek hata verdiğinde yapılacak işlemler
+                console.error('AJAX error:', status, error);
+            }
+        });
+    });
+
+    //$('.search-title').click(function () {
+
+    //    var dataTitle = $(this).attr('data-title');
+    //    console.log(dataTitle);
+
+    //    $.ajax({
+    //        url: 'Url.Action("ArticleDetails", "Home")',
+    //        type: 'POST',
+    //        dataType: 'json',
+    //        data: { title: dataTitle },
+    //        success: function(response) {
+                
+    //            console.log("Başlık: " + response.title);
+    //            console.log("Özet: " + response.abstract);
+    //            console.log("Tam Metin: " + response.fulltext);
+    //            alert("Bilgiler başarıyla alındı!");
+
+    //            // Yeni sayfada veya bölümde göstermek için örneğin:
+    //            $('#detail-container').html('<h1>' + response.title + '</h1><p>' + response.abstract + '</p><div>' + response.fulltext + '</div>');
+    //        },
+    //        error: function(xhr, status, error) {
+    //            console.error('AJAX error:', status, error);
+    //            alert('Bilgiler alınırken bir hata oluştu!');
+    //        }
+    //    });
+    //});
+
+    $('.recomm-btn').click(function () {
+
+        var dataTitle = $(this).attr('data-title');
+        var dataState = $(this).attr('data-state');
+        var dataType = $(this).attr('data-type');
+        console.log(dataTitle);
+
+        $.ajax({
+            url: '@Url.Action("PrecisionFeedback", "Home")',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                title: dataTitle,
+                state: dataState,
+                type: dataType
+            },
+            success: function (response) {
+                alert(response);
+            },
+            error: function (xhr, status, error) {
+                // İstek hata verdiğinde yapılacak işlemler
+                console.error('AJAX error:', status, error);
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        // DataTable başlatma
+        //$.fn.dataTable.moment('DD/MM/YYYY'); // Burada kendi tarih formatınızı belirtin
+        //$.fn.dataTable.moment('DD-MM-YYYY');
+
+        $('.datatables-basic').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.22/i18n/Turkish.json"
+            },
+            "columns": [
+                { "data": null, "defaultContent": '', "className": 'control', "orderable": false }, // İlk sütun için kontrol
+                { "data": "Title" },
+                { "data": "Score" },
+                { "data": "Feedback" },
+                { "data": null, "defaultContent": '', "className": 'control', "orderable": false }
+            ],
+            //"columnDefs": [
+            //    {
+            //        "targets": 3,
+            //        "render": function (data, type, row) {
+            //            if (type === 'display' || type === 'filter') {
+            //                // Ekranda gösterim ve filtreleme için DD-MM-YYYY formatını koru
+            //                return data;
+            //            } else if (type === 'sort' || type === 'type') {
+            //                // Sıralama için YYYY-MM-DD formatına dönüştür
+            //                var date = moment(data, 'DD-MM-YYYY');
+            //                return date.isValid() ? date.format('YYYY-MM-DD') : '';
+            //            }
+            //            return data;
+            //        }
+            //    }
+            //],
+            "order": [[1, 'asc']], // Varsayılan olarak Ad sütununa göre sırala
+            "responsive": true,
+            // AJAX yoluyla veri çekme veya server-side processing yapılacaksa burada belirtilebilir
+        });
+    });
+
+</script>
